@@ -4,8 +4,8 @@
 * text=auto
 
 * linguist-vendored
-*.js linguist-vendored=false
 *.cs linguist-vendored=false
+*.js linguist-vendored=false
 *.html linguist-vendored=true
 *.htm linguist-vendored=true
 *.cshtml linguist-vendored=true
