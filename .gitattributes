@@ -3,7 +3,7 @@
 ###############################################################################
 * text=auto
 
-*.cs linguist-detectable=true
+*.cs linguist-vendored=true
 *.html linguist-vendored=false
 *.htm linguist-vendored=false
 *.cshtml linguist-vendored=false
