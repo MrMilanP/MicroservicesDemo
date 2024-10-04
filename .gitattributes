@@ -5,10 +5,7 @@
 
 * linguist-vendored
 *.cs linguist-vendored=false
-*.js linguist-vendored=false
-*.html linguist-vendored=true
-*.htm linguist-vendored=true
-*.cshtml linguist-vendored=true
+
 
 ###############################################################################
 # Set default behavior for command prompt diff.
