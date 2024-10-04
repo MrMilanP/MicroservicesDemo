@@ -4,8 +4,6 @@
 * text=auto
 
 *.cs linguist-detectable=true
-*.js linguist-detectable=false`
-*.html linguist-detectable=false
 
 ###############################################################################
 # Set default behavior for command prompt diff.
