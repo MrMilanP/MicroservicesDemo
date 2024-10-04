@@ -33,8 +33,14 @@ Obezbedi da API i mikroservisi rade, i pristupi im putem URL-a.
 
 ## Detalji o strukturi
 UserService: Mikroservis koji se bavi rukovanjem korisnicima i bazom podataka.
+
 MicroservicesDemo: Glavni projekat u kojem se prikazuje rad sa mikroservisima.
+
 Tehnologije korišćene
+
 .NET Core
+
 Entity Framework Core
+
 ASP.NET Core
+
