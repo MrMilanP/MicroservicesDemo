@@ -5,7 +5,7 @@
 
 * linguist-vendored
 *.cs linguist-vendored=false
-*.js linguist-detectable=true
+*.js linguist-detectable=false
 *.html linguist-detectable=true
 
 ###############################################################################
