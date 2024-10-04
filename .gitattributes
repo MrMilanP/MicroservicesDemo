@@ -5,6 +5,8 @@
 
 * linguist-vendored
 *.cs linguist-vendored=false
+*.js linguist-detectable=true
+*.html linguist-detectable=true
 
 ###############################################################################
 # Set default behavior for command prompt diff.
