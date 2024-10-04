@@ -3,10 +3,12 @@
 ###############################################################################
 * text=auto
 
-*.cs linguist-vendored=true
-*.html linguist-vendored=false
-*.htm linguist-vendored=false
-*.cshtml linguist-vendored=false
+* linguist-vendored
+*.js linguist-vendored=false
+*.cs linguist-vendored=false
+*.html linguist-vendored=true
+*.htm linguist-vendored=true
+*.cshtml linguist-vendored=true
 
 ###############################################################################
 # Set default behavior for command prompt diff.
