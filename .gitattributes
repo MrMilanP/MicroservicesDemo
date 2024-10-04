@@ -5,6 +5,8 @@
 
 *.cs linguist-detectable=true
 *.html linguist-vendored=false
+*.htm linguist-vendored=false
+*.cshtml linguist-vendored=false
 
 ###############################################################################
 # Set default behavior for command prompt diff.
