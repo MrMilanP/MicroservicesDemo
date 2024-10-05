@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
-using UserService.Models;
+using UserMicroservice.Models;
 
 namespace MicroservicesDemo.Models
 {

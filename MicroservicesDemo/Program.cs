@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using UserService.Data;
+using System.Diagnostics;
+using UserMicroservice.Data;
+using UserMicroservice.Repositories;
+using UserMicroservice.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,13 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 // Konfiguriši konekcioni string
 var str = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<UserDbContext>(options => options.UseSqlServer(str));
+
+
+// Registruj interfejse i implementacije
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserMicroservice.Services.UserService>();
+
+
 
 // Dodaj autorizaciju
 builder.Services.AddAuthorization();

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using UserService.Data;
+using UserMicroservice.Data;
 
 #nullable disable
 
-namespace UserService.Migrations
+namespace UserMicroservice.Migrations
 {
     [DbContext(typeof(UserDbContext))]
     [Migration("20241005120837_AddPasswordFieldToUser")]

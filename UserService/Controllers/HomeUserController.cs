@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using UserService.Models;
+using UserMicroservice.Models;
 
-namespace UserService.Controllers
+namespace UserMicroservice.Controllers
 {
 
     public class HomeUserController : Controller

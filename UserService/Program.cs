@@ -1,13 +1,25 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿
+
+
+// Program.cs u UserMicroservice projektu služi prvenstveno za razvoj i izolovano testiranje ovog mikroservisa.
+// Kada se pokreće cela aplikacija iz MicroservicesDemo, ovaj fajl nije aktivan, jer MicroservicesDemo upravlja startup procesom.
+// Sve konfiguracije iz UserMicroservice treba registrovati u Program.cs glavnog projekta (MicroservicesDemo).
+
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.Text;
-using UserService.Data;
+using UserMicroservice.Data;
+using UserMicroservice.Repositories;
+using UserMicroservice.Services;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Dodaj JWT autentifikaciju u UserService API
+// Dodaj JWT autentifikaciju u UserMicroservice API
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -26,6 +38,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // Dodaj servis za DbContext i poveži sa SQL Serverom
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 
 // Dodaj servise za kontrolere
 builder.Services.AddControllers();
@@ -59,10 +73,14 @@ app.UseAuthentication();  // Aktiviraj autentifikaciju
 app.UseAuthorization();   // Aktiviraj autorizaciju
 app.UseRouting();
 
-app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Homeuser}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "user",
+    pattern: "user/{action=Index}/{id?}",
+    defaults: new { controller = "User" });
 
 app.Run();

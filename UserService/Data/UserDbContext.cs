@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using UserService.Models;
+using UserMicroservice.Models;
 
-namespace UserService.Data
+namespace UserMicroservice.Data
 {
     public class UserDbContext : DbContext
     {

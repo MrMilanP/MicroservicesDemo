@@ -3,10 +3,10 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using UserService.Data;
-using UserService.Models;
+using UserMicroservice.Data;
+using UserMicroservice.Models;
 
-namespace UserService.Controllers
+namespace UserMicroservice.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

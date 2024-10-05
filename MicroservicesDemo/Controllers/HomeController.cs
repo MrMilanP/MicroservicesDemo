@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Text.Json;
-using UserService.Models;
+using UserMicroservice.Models;
 
 namespace MicroservicesDemo.Controllers
 {
@@ -39,10 +39,10 @@ namespace MicroservicesDemo.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserLoginModel loginModel)
         {
-            // Kreiraj HttpClient za UserService pomoću IHttpClientFactory
+            // Kreiraj HttpClient za UserMicroservice pomoću IHttpClientFactory
             var client = _httpClientFactory.CreateClient("UserServiceClient");
 
-            // Pozovi UserService API za prijavu
+            // Pozovi UserMicroservice API za prijavu
             var response = await client.PostAsJsonAsync("https://localhost:7033/api/auth/login", loginModel);
 
             if (!response.IsSuccessStatusCode)

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace UserService.Migrations
+namespace UserMicroservice.Migrations
 {
     /// <inheritdoc />
     public partial class AddPasswordFieldToUser : Migration

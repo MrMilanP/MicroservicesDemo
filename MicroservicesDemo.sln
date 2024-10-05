@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroservicesDemo", "Micros
 		{F4D9DDEB-D548-44C2-AAFB-D70067EE8672} = {F4D9DDEB-D548-44C2-AAFB-D70067EE8672}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService", "UserService\UserService.csproj", "{3877BC85-6907-4350-B0F0-1D0924BD9498}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserMicroservice", "UserService\UserMicroservice.csproj", "{3877BC85-6907-4350-B0F0-1D0924BD9498}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService", "ProductService\ProductService.csproj", "{4CC5C204-2579-4B5F-94C3-F759CB502DED}"
 EndProject

@@ -1,4 +1,4 @@
-﻿namespace UserService.Models
+﻿namespace UserMicroservice.Models
 {
     public class UserLoginModel
     {
