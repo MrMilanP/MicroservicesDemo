@@ -62,5 +62,29 @@ Ovo je demo aplikacija kreirana kako bih osvežio znanje o mikroservisima i inte
     curl -X POST https://localhost:7033/api/auth/login -H 'Content-Type: application/json' -d '{ "email": "test@example.com", "password": "Test123!" }'
     ```
 
+### Dodatne izmene
+
+- **Preimenovan `UserService` u `UserMicroservice`**:
+  - Projekat je sada pod imenom `UserMicroservice`, i svi relevantni delovi koda su ažurirani.
+
+- **Dodati `IUserService` interfejs i `UserService` implementacija**:
+  - `IUserService` definiše metode za rad sa korisnicima (`GetAllUsersAsync`, `AddUserAsync`, `UpdateUserAsync`, `DeleteUserAsync`).
+  - `UserService` implementira `IUserService` i koristi `UserRepository` za pristup bazi.
+
+- **Dodati `IUserRepository` interfejs i `UserRepository` implementacija**:
+  - `IUserRepository` definiše metode za rad sa bazom podataka (`GetAllAsync`, `AddAsync`, `UpdateAsync`, `DeleteAsync`).
+  - `UserRepository` koristi `UserDbContext` za CRUD operacije nad bazom podataka.
+
+- **Izmenjen `UserController`**:
+  - Izbačen direktan pristup `UserDbContext` i zamenjen ubrizgavanjem `IUserService`.
+  - Dodata poslovna logika kroz `IUserService`, što omogućava bolju podelu odgovornosti i lakše održavanje.
+  - Stare metode su komentarisane i zamenjene novim implementacijama:
+    - `GetUsers` je zamenjen sa `GetAllUsers` koji koristi `IUserService`.
+    - `CreateUser` je zamenjen sa `AddUser` koji koristi asinhroni poziv ka `IUserService`.
+    - Dodate metode `UpdateUser` i `DeleteUser` koje koriste `IUserService` za ažuriranje i brisanje korisnika.
+
+Sve izmene su rađene sa ciljem poboljšanja strukture aplikacije i bolje organizacije koda, uz odvajanje poslovne logike u servise i repozitorijume.
+
+
 ## Napomena
 Ovaj projekat je primer mikroservisne arhitekture i nije predviđen za produkcijsku upotrebu bez daljih prilagođavanja i bezbednosnih provera.
