@@ -76,7 +76,7 @@ Ovo je demo aplikacija kreirana kako bih osvežio znanje o mikroservisima i inte
   - `UserRepository` koristi `UserDbContext` za CRUD operacije nad bazom podataka.
 
 - **Izmenjen `UserController`**:
-  - Izbačen direktan pristup `UserDbContext` i zamenjen ubrizgavanjem `IUserService`.
+  - Izbačen direktan pristup `UserDbContext` i zamenjen inddžektovanjem `IUserService`.
   - Dodata poslovna logika kroz `IUserService`, što omogućava bolju podelu odgovornosti i lakše održavanje.
   - Stare metode su komentarisane i zamenjene novim implementacijama:
     - `GetUsers` je zamenjen sa `GetAllUsers` koji koristi `IUserService`.
