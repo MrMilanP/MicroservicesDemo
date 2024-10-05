@@ -1,12 +1,13 @@
-﻿// UsersController.cs
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using UserService.Models;
 using UserService.Data;
+using UserService.Models;
 
 namespace UserService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]  // Zaštiti sve rute u kontroleru
     public class UsersController : ControllerBase
     {
         private readonly UserDbContext _context;

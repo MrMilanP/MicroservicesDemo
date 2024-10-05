@@ -20,3 +20,36 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Prilagodjene forme */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+.container {
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }

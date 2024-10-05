@@ -1,0 +1,66 @@
+﻿<h2 class="text-center mt-4">User Profiles</h2>
+
+<div class="container mt-4">
+    <div id="userProfiles" class="mx-auto col-md-8 border p-3 rounded shadow-sm">
+        <!-- Ovde će se dodavati korisnici dinamički -->
+    </div>
+</div>
+
+<script>
+    const protocol = window.location.protocol;
+    const port = window.location.port ? `:${window.location.port}` : '';
+    const apiUrl = `${protocol}//localhost${port}/api/users`;
+
+    console.log(`Constructed API URL: ${apiUrl}`);
+
+    const jwtToken = localStorage.getItem('jwt');
+    console.log('JWT Token:', jwtToken);
+
+    if (!jwtToken) {
+        console.error('JWT token not found. Redirecting to login page...');
+        window.location.href = '/Home/Login';
+    } else {
+        fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            }
+        })
+        .then(response => {
+            console.log(`Response status: ${response.status}`);
+            if (!response.ok) {
+                throw new Error(`Network response was not ok. Status: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(users => {
+            console.log('User data received:', users);
+
+            // Kontejner gde će se prikazati korisnici
+            const userProfilesContainer = document.getElementById('userProfiles');
+
+            // Proveri da li ima korisnika
+            if (users.length === 0) {
+                userProfilesContainer.innerHTML = '<p>No users found.</p>';
+                return;
+            }
+
+            // Dinamički kreiraj HTML za svakog korisnika
+            users.forEach(user => {
+                const userDiv = document.createElement('div');
+                userDiv.classList.add('border', 'p-3', 'mb-3', 'bg-light', 'rounded');
+
+                userDiv.innerHTML = `
+                    <p><strong>Name:</strong> ${user.name}</p>
+                    <p><strong>Email:</strong> ${user.email}</p>
+                `;
+
+                userProfilesContainer.appendChild(userDiv);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching user profiles:', error);
+            document.getElementById('userProfiles').innerHTML = '<p>Error loading user profiles.</p>';
+        });
+    }
+</script>

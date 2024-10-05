@@ -1,10 +1,29 @@
+Ôªøusing Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
+using System.Text;
 using UserService.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-//Debug.WriteLine("Send to debug output. {} " + builder.Configuration.GetConnectionString("DefaultConnection"));
-// Dodaj servis za DbContext i poveûi sa SQL Serverom
+
+// Dodaj JWT autentifikaciju u UserService API
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
+
+// Dodaj servis za DbContext i pove≈æi sa SQL Serverom
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -24,15 +43,20 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// Konfiguriöi middleware za aplikaciju
+// Konfiguri≈°i middleware za aplikaciju
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
 
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+
+app.UseAuthentication();  // Aktiviraj autentifikaciju
+app.UseAuthorization();   // Aktiviraj autorizaciju
 app.UseRouting();
 
 app.UseAuthorization();
