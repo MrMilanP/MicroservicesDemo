@@ -91,27 +91,27 @@ Sve izmene su rađene sa ciljem poboljšanja strukture aplikacije i bolje organi
 U ovom dodatku opisane su ključne izmene i refaktorisanje koda između `MicroservicesDemo` i `UserMicroservice` projekta kako bi se omogućila bolja organizacija i deljenje konfiguracije između servisa. Sledeće promene su implementirane:
 
 - **Refaktorisanje `AuthController`-a**
-- U `AuthController`-u `UserMicroservice`-a uklonjena je zavisnost od `UserDbContext` i `IConfiguration`.
-- Implementiran je `IUserService` kao apstrakcioni sloj za komunikaciju sa bazom, čime je postignuto bolje razdvajanje odgovornosti.
-- `Login` metoda sada koristi `IUserService` umesto direktnog `DbContext` pristupa. To omogućava lakšu izmenu logike i bolju testabilnost.
+  - U `AuthController`-u `UserMicroservice`-a uklonjena je zavisnost od `UserDbContext` i `IConfiguration`.
+  - Implementiran je `IUserService` kao apstrakcioni sloj za komunikaciju sa bazom, čime je postignuto bolje razdvajanje odgovornosti.
+  - `Login` metoda sada koristi `IUserService` umesto direktnog `DbContext` pristupa. To omogućava lakšu izmenu logike i bolju testabilnost.
 
 - **entralizacija `JwtSettings`**
-- `JwtSettings` klasa premeštena je u novi zajednički projekat `MicroservicesShared` kako bi oba servisa (`MicroservicesDemo` i `UserMicroservice`) koristila istu konfiguraciju.
-- `JwtSettings` je sada registrovan kao `Singleton` servis i može se koristiti u oba projekta, bez potrebe za dupliranjem konfiguracije.
-- To obezbeđuje doslednost JWT vrednosti (`Issuer`, `Audience`, `Key`) kroz više mikroservisa.
+  - `JwtSettings` klasa premeštena je u novi zajednički projekat `MicroservicesShared` kako bi oba servisa (`MicroservicesDemo` i `UserMicroservice`) koristila istu konfiguraciju.
+  - `JwtSettings` je sada registrovan kao `Singleton` servis i može se koristiti u oba projekta, bez potrebe za dupliranjem konfiguracije.
+  - To obezbeđuje doslednost JWT vrednosti (`Issuer`, `Audience`, `Key`) kroz više mikroservisa.
 
 - **Implementacija `SigningCredentials`**
-- `SigningCredentials` je kreiran na osnovu `SymmetricSecurityKey` vrednosti (`jwtSettings.Key`) i registrovan kao `Singleton`.
-- Umesto kreiranja `SigningCredentials` unutar `AuthController`-a, koristi se injektovana vrednost, što omogućava centralizaciju kreiranja JWT tokena.
+  - `SigningCredentials` je kreiran na osnovu `SymmetricSecurityKey` vrednosti (`jwtSettings.Key`) i registrovan kao `Singleton`.
+  - Umesto kreiranja `SigningCredentials` unutar `AuthController`-a, koristi se injektovana vrednost, što omogućava centralizaciju kreiranja JWT tokena.
 
 - **Konfiguracija `Program.cs` u `MicroservicesDemo`**
-- `JwtSettings` se validira u `Program.cs` u `MicroservicesDemo` i koristi se u `TokenValidationParameters`.
-- Kreiran je `SymmetricSecurityKey` na osnovu `jwtSettings.Key`, a `SigningCredentials` se koristi za konfiguraciju JWT Bearer autentifikacije.
-- Ako se `UserMicroservice` pokrene nezavisno, koristi sopstvene `JwtSettings` vrednosti definisane u `MicroservicesShared` projektu.
+  - `JwtSettings` se validira u `Program.cs` u `MicroservicesDemo` i koristi se u `TokenValidationParameters`.
+  - Kreiran je `SymmetricSecurityKey` na osnovu `jwtSettings.Key`, a `SigningCredentials` se koristi za konfiguraciju JWT Bearer autentifikacije.
+  - Ako se `UserMicroservice` pokrene nezavisno, koristi sopstvene `JwtSettings` vrednosti definisane u `MicroservicesShared` projektu.
 
 - **Asinhrono Rukovanje Podacima u `AuthController`**
-- `Login` metoda je refaktorisana da koristi `async/await` za asinhrono dohvaćanje korisnika iz baze putem `IUserService`.
-- To omogućava bolje performanse i efikasnije upravljanje resursima tokom rada sa bazom.
+  - `Login` metoda je refaktorisana da koristi `async/await` za asinhrono dohvaćanje korisnika iz baze putem `IUserService`.
+  - To omogućava bolje performanse i efikasnije upravljanje resursima tokom rada sa bazom.
 
 Ovim refaktoringom postignuta je bolja modularnost, doslednost i lakša održivost `MicroservicesDemo` i `UserMicroservice` projekata.
 
