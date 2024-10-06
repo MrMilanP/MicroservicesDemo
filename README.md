@@ -116,5 +116,27 @@ U ovom dodatku opisane su ključne izmene i refaktorisanje koda između `Microse
 Ovim refaktoringom postignuta je bolja modularnost, doslednost i lakša održivost `MicroservicesDemo` i `UserMicroservice` projekata.
 
 
+### Dodatak 3 - Implementacija Prilagođenog Swagger UI-a
+
+Implementirana je prilagođena Swagger UI konfiguracija u `UserMicroservice` projektu radi bolje interakcije sa JWT autentifikacijom i prilagođavanja korisničkog interfejsa.
+
+- **Prilagođeni `wwwroot/swagger` direktorijum:**
+  - Svi prilagođeni resursi za Swagger UI (kao što su `index.html`, `swagger-ui.css`, i `custom-swagger.js`) nalaze se u `wwwroot/swagger` direktorijumu.
+  - Ovi resursi omogućavaju automatsko postavljanje JWT tokena nakon prijave (`Login`), kao i bolju kontrolu nad izgledom Swagger UI-a.
+
+- **Prilagođeni `index.html`:**
+  - `index.html` je prilagođen i hostovan unutar `wwwroot/swagger` direktorijuma.
+  - Koristi prilagođeni `JavaScript` (`custom-swagger.js`) za automatsko rukovanje `JWT` tokenima i interakciju sa Swagger-om.
+
+- **Automatsko postavljanje JWT tokena:**
+  - Implementiran `custom-swagger.js` koji automatski prepoznaje `JWT` token iz `Login` odgovora.
+  - Token se smešta u `localStorage` i automatski koristi za sve buduće pozive unutar Swagger UI-a.
+
+- **Swagger konfiguracija u `Program.cs`:**
+  - Prilagođena `SwaggerEndpoint` putanja (`/swagger/index.html`) zamenjuje podrazumevanu putanju (`/swagger`) kako bi koristila prilagođeni interfejs.
+
+Ove izmene omogućavaju lakšu interakciju sa API-jem kroz Swagger UI i smanjuju potrebu za manuelnim unosom `JWT` tokena nakon svake prijave. Takođe, prilagođeni `index.html` daje veću kontrolu nad izgledom i funkcionalnošću Swagger UI-a.
+
+
 ## Napomena
 Ovaj projekat je primer mikroservisne arhitekture i nije predviđen za produkcijsku upotrebu bez daljih prilagođavanja i bezbednosnih provera.
