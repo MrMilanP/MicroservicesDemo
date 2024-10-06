@@ -24,4 +24,8 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MicroservicesShared\MicroservicesShared.csproj" />
+  </ItemGroup>
+
 </Project>

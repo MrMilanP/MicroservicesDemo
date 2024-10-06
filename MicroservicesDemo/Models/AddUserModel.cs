@@ -7,7 +7,7 @@ namespace MicroservicesDemo.Models
     public class AddUserModel : PageModel
     {
         [BindProperty]
-        public User User { get; set; } = new User();
+        public User user { get; set; } = new User();
 
         public void OnGet()
         {

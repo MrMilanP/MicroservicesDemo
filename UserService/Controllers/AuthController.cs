@@ -4,7 +4,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using UserMicroservice.Data;
+
 using UserMicroservice.Models;
+
+using MicroservicesShared.Configuration;
+using UserMicroservice.Repositories;
+using UserMicroservice.Services;
+
 
 namespace UserMicroservice.Controllers
 {
@@ -12,45 +18,47 @@ namespace UserMicroservice.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserDbContext _context;
-        private readonly IConfiguration _configuration;
+        //private readonly UserDbContext _context;
+        //private readonly IConfiguration _configuration;
+        private readonly IUserService _userService;
 
-        public AuthController(UserDbContext context, IConfiguration configuration)
+        private readonly SigningCredentials _signingCredentials;
+        private readonly JwtSettings _jwtSettings;
+
+        public AuthController(IUserService userService, SigningCredentials signingCredentials, JwtSettings jwtSettings)
         {
-            _context = context;
-            _configuration = configuration;
+            //_context = context;
+            //_configuration = configuration;
+            _userService = userService;
+            _signingCredentials = signingCredentials;
+            _jwtSettings = jwtSettings;
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] UserLoginModel loginModel)
+        public async Task<IActionResult> Login([FromBody] UserLoginModel loginModel)
         {
             try
             {
-                var user = _context.Users.SingleOrDefault(u => u.Email == loginModel.Email);
+                var user = await _userService.GetUserByEmailAsync(loginModel.Email);
 
                 if (user == null || user.Password != loginModel.Password)
                     return Unauthorized(new { message = "Invalid credentials" });
 
-                // Kreiraj JWT claims
                 var claims = new[]
                 {
             new Claim(JwtRegisteredClaimNames.Sub, user.Email),
             new Claim("UserId", user.Id.ToString())
         };
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
                 var token = new JwtSecurityToken(
-                    issuer: _configuration["Jwt:Issuer"],
-                    audience: _configuration["Jwt:Audience"],
+                    issuer: _jwtSettings.Issuer,
+                    audience: _jwtSettings.Audience,
                     claims: claims,
                     expires: DateTime.Now.AddMinutes(30),
-                    signingCredentials: creds);
+                    signingCredentials: _signingCredentials);
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-                // Dodaj log da vidiš odgovor pre nego što se pošalje
                 Console.WriteLine($"Generated Token: {tokenString}");
 
                 return Ok(new { Token = tokenString });

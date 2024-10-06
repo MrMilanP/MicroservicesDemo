@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService", "ProductSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService", "OrderService\OrderService.csproj", "{F4D9DDEB-D548-44C2-AAFB-D70067EE8672}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroservicesShared", "MicroservicesShared\MicroservicesShared.csproj", "{87B8AA74-64BD-4AA7-BBC5-1C20ABE27FB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{F4D9DDEB-D548-44C2-AAFB-D70067EE8672}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4D9DDEB-D548-44C2-AAFB-D70067EE8672}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4D9DDEB-D548-44C2-AAFB-D70067EE8672}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87B8AA74-64BD-4AA7-BBC5-1C20ABE27FB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87B8AA74-64BD-4AA7-BBC5-1C20ABE27FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87B8AA74-64BD-4AA7-BBC5-1C20ABE27FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87B8AA74-64BD-4AA7-BBC5-1C20ABE27FB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

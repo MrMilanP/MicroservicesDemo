@@ -26,12 +26,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <!-- Dodaj link za UserProfile -->
+@*                         <!-- Dodaj link za UserProfile -->
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UserProfile">Profile</a>
-                        </li>
+                        </li> *@
                         <!-- Dodaj linkove za Register i Login -->
-                        @if (User.Identity.IsAuthenticated)  // Proveri da li je korisnik prijavljen
+                        @if (User.Identity != null &&  User.Identity.IsAuthenticated)  // Proveri da li je korisnik prijavljen
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UserProfile">Profile</a>
