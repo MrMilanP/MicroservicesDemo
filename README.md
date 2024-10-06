@@ -95,7 +95,7 @@ U ovom dodatku opisane su ključne izmene i refaktorisanje koda između `Microse
   - Implementiran je `IUserService` kao apstrakcioni sloj za komunikaciju sa bazom, čime je postignuto bolje razdvajanje odgovornosti.
   - `Login` metoda sada koristi `IUserService` umesto direktnog `DbContext` pristupa. To omogućava lakšu izmenu logike i bolju testabilnost.
 
-- **entralizacija `JwtSettings`**
+- **Centralizacija `JwtSettings`**
   - `JwtSettings` klasa premeštena je u novi zajednički projekat `MicroservicesShared` kako bi oba servisa (`MicroservicesDemo` i `UserMicroservice`) koristila istu konfiguraciju.
   - `JwtSettings` je sada registrovan kao `Singleton` servis i može se koristiti u oba projekta, bez potrebe za dupliranjem konfiguracije.
   - To obezbeđuje doslednost JWT vrednosti (`Issuer`, `Audience`, `Key`) kroz više mikroservisa.
