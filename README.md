@@ -118,24 +118,32 @@ Ovim refaktoringom postignuta je bolja modularnost, doslednost i lakša održivo
 
 ### Dodatak 3 - Implementacija Prilagođenog Swagger UI-a
 
-Implementirana je prilagođena Swagger UI konfiguracija u `UserMicroservice` projektu radi bolje interakcije sa JWT autentifikacijom i prilagođavanja korisničkog interfejsa.
+U `UserMicroservice` projektu implementiran je prilagođeni Swagger UI sa dodatnom podrškom za JWT autentifikaciju. Prilagođeni Swagger interfejs omogućava lakšu interakciju sa API metodama i automatsko rukovanje JWT tokenima nakon prijave.
 
-- **Prilagođeni `wwwroot/swagger` direktorijum:**
-  - Svi prilagođeni resursi za Swagger UI (kao što su `index.html`, `swagger-ui.css`, i `custom-swagger.js`) nalaze se u `wwwroot/swagger` direktorijumu.
-  - Ovi resursi omogućavaju automatsko postavljanje JWT tokena nakon prijave (`Login`), kao i bolju kontrolu nad izgledom Swagger UI-a.
+- **Prilagođeni `index.html`:**  
+  Ako u `wwwroot/swagger` postoji prilagođeni `index.html`, Swagger UI koristi taj fajl umesto podrazumevanog. Ova izmena omogućava veću kontrolu nad prikazom i stilom Swagger UI-a.
 
-- **Prilagođeni `index.html`:**
-  - `index.html` je prilagođen i hostovan unutar `wwwroot/swagger` direktorijuma.
-  - Koristi prilagođeni `JavaScript` (`custom-swagger.js`) za automatsko rukovanje `JWT` tokenima i interakciju sa Swagger-om.
+- **Direktorijum `wwwroot/swagger`:**  
+  Svi prilagođeni resursi za Swagger UI (kao što su `index.html`, `swagger-ui.css`, i `custom-swagger.js`) nalaze se u `wwwroot/swagger` direktorijumu. Ovi fajlovi omogućavaju dodatne prilagodbe kao što su automatsko postavljanje JWT tokena nakon prijave (`Login`), kao i bolju kontrolu nad funkcionalnošću Swagger-a.
 
-- **Automatsko postavljanje JWT tokena:**
-  - Implementiran `custom-swagger.js` koji automatski prepoznaje `JWT` token iz `Login` odgovora.
-  - Token se smešta u `localStorage` i automatski koristi za sve buduće pozive unutar Swagger UI-a.
+- **Podrazumevani interfejs (`index.html`):**  
+  Ako `index.html` nije prisutan u `wwwroot/swagger`, Swagger koristi standardni interfejs bez dodatne prilagodbe.
 
-- **Swagger konfiguracija u `Program.cs`:**
-  - Prilagođena `SwaggerEndpoint` putanja (`/swagger/index.html`) zamenjuje podrazumevanu putanju (`/swagger`) kako bi koristila prilagođeni interfejs.
+- **Prilagođeni interfejs (`wwwroot/swagger/index.html`):**  
+  Ako postoji prilagođeni `index.html` fajl, Swagger UI koristi taj fajl i prilagođeni `JavaScript` kod (`custom-swagger.js`) za automatsko rukovanje `JWT` tokenima.
 
-Ove izmene omogućavaju lakšu interakciju sa API-jem kroz Swagger UI i smanjuju potrebu za manuelnim unosom `JWT` tokena nakon svake prijave. Takođe, prilagođeni `index.html` daje veću kontrolu nad izgledom i funkcionalnošću Swagger UI-a.
+- **JWT Autorizacija:**  
+  Swagger UI sada sadrži `Bearer` autorizaciju, omogućavajući testiranje zaštićenih API metoda bez potrebe za manuelnim unosom JWT tokena.
+
+- **Automatsko postavljanje JWT tokena:**  
+  `custom-swagger.js` prepoznaje `JWT` token nakon uspešne prijave i automatski ga postavlja u `Authorization` header za sve buduće API pozive. To omogućava besprekorno testiranje zaštićenih ruta direktno iz Swagger UI-a.
+
+- **Globalna konfiguracija sigurnosnih zahteva:**  
+  Implementirani su sigurnosni zahtevi koji osiguravaju da sve zaštićene rute u Swagger UI koriste `Bearer` autorizaciju. Prilikom testiranja API-ja, Swagger automatski dodaje `JWT` token u `Authorization` header.
+
+Ove izmene omogućavaju lakšu interakciju sa Swagger UI-jem i smanjuju potrebu za manuelnim unosom `JWT` tokena prilikom testiranja API poziva.
+
+
 
 
 ## Napomena
