@@ -8,6 +8,9 @@ using UserMicroservice.Data;
 using UserMicroservice.Repositories;
 using UserMicroservice.Services;
 using MicroservicesShared.Configuration;
+using Microsoft.OpenApi.Models;
+using UserMicroservice.Models;
+using Microsoft.OpenApi.Any;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -80,6 +83,47 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient();
 
+// Registruje Swagger generator u servisni kontejner, omogućava generisanje Swagger dokumentacije za API
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "UserMicroservice API", Version = "v1" });
+
+    // Konfiguriši `JWT` autorizaciju
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Unesi 'Bearer' [space] token u polje ispod.\nPrimer: 'Bearer 12345abcdef'",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    // Globalna konfiguracija sigurnosnih zahteva
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("UserPolicy", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+    });
+});
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -94,6 +138,12 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();  // Aktiviraj autentifikaciju
 app.UseAuthorization();   // Aktiviraj autorizaciju
+
+// Aktivira Swagger middleware koji generiše Swagger JSON dokumentaciju na /swagger/v1/swagger.json
+app.UseSwagger();
+
+// Aktivira Swagger UI (korisnički interfejs) na /swagger URL-u, gde možeš vizuelno pregledati i testirati API rute
+app.UseSwaggerUI();
 
 app.MapControllerRoute(
     name: "default",

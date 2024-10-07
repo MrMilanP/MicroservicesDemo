@@ -4,7 +4,8 @@ using UserMicroservice.Models;
 
 namespace UserMicroservice.Controllers
 {
-
+    // Ovim atributom sakrij ceo kontroler iz Swagger dokumentacije
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class HomeUserController : Controller
     {
         private readonly ILogger<HomeUserController> _logger;

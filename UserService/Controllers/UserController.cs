@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UserMicroservice.Data;
@@ -9,7 +10,7 @@ namespace UserMicroservice.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]  // Zaštiti sve rute u kontroleru
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : ControllerBase
     {
         // Privatno polje koje sadrzi UserService instancu ubrizganu preko Dependency Injection-a.
@@ -44,18 +45,17 @@ namespace UserMicroservice.Controllers
         //    _context.SaveChanges();
         //    return CreatedAtAction(nameof(GetUsers), new { id = user.Id }, user);
         //}
-        public async Task<IActionResult> AddUser(User user)
+        public async Task<IActionResult> AddUser([FromQuery] string name, [FromQuery] string email, [FromQuery] string password)
         {
+            var user = new User { Name = name, Email = email, Password = password };
             var result = await _userService.AddUserAsync(user);
-            if (result)
-                return Ok();
-
-            return BadRequest("Error adding user");
+            return result ? Ok() : BadRequest("Error adding user");
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateUser(User user)
+        public async Task<IActionResult> UpdateUser([FromQuery] string name, [FromQuery] string email, [FromQuery] string password)
         {
+            var user = new User { Name = name, Email = email, Password = password };
             var result = await _userService.UpdateUserAsync(user);
             if (result)
                 return Ok();

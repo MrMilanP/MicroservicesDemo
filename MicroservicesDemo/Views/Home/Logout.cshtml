@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Logout";
+}
+
+<h2 class="text-center mt-4">Logging out...</h2>
+
+<script>
+    // Obrisi `JWT` iz `localStorage`
+    localStorage.removeItem('jwt');
+    console.log("JWT token obrisan iz `localStorage`.");
+
+    // Preusmeri korisnika na `Login` stranicu
+    window.location.href = '/Home/Login';
+</script>

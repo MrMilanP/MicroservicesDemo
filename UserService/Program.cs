@@ -79,6 +79,9 @@ builder.Services.AddControllers();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Registruje Swagger generator u servisni kontejner, omogućava generisanje Swagger dokumentacije za API
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -103,6 +106,13 @@ app.UseStaticFiles();
 
 app.UseAuthentication();  // Aktiviraj autentifikaciju
 app.UseAuthorization();   // Aktiviraj autorizaciju
+
+// Aktivira Swagger middleware koji generiše Swagger JSON dokumentaciju na /swagger/v1/swagger.json
+app.UseSwagger();
+
+// Aktivira Swagger UI (korisnički interfejs) na /swagger URL-u, gde možeš vizuelno pregledati i testirati API rute
+app.UseSwaggerUI();
+
 app.UseRouting();
 
 

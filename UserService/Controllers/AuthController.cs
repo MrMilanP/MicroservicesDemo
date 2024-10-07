@@ -35,20 +35,21 @@ namespace UserMicroservice.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginModel loginModel)
+        public async Task<IActionResult> Login([FromQuery] string email, [FromQuery] string password)
+
         {
             try
             {
-                var user = await _userService.GetUserByEmailAsync(loginModel.Email);
+                var user = await _userService.GetUserByEmailAsync(email);
 
-                if (user == null || user.Password != loginModel.Password)
+                if (user == null || user.Password != password)
                     return Unauthorized(new { message = "Invalid credentials" });
 
                 var claims = new[]
                 {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-            new Claim("UserId", user.Id.ToString())
-        };
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                    new Claim("UserId", user.Id.ToString())
+                };
 
                 var token = new JwtSecurityToken(
                     issuer: _jwtSettings.Issuer,

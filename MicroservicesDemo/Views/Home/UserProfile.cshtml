@@ -7,19 +7,36 @@
 </div>
 
 <script>
-    const protocol = window.location.protocol;
-    const port = window.location.port ? `:${window.location.port}` : '';
-    const apiUrl = `${protocol}//localhost${port}/api/user`;
+    // Preuzmi `jwtToken` iz ViewBag-a ako postoji (Ova linija je isključena jer se više ne koristi `ViewBag`)
+    // const jwtTokenFromServer = '@ViewBag.JwtToken';
 
-    console.log(`Constructed API URL: ${apiUrl}`);
+    // Umesto `ViewBag`, sada koristimo `TempData`.
+    // `TempData` može da preživi `Redirect` i prosledi `JWT` token nakon `RedirectToAction` poziva u kontroleru.
+    // Na ovaj način `jwtToken` je dostupan na `UserProfile` stranici, čak i nakon što je korišćen `Redirect`.
+    const jwtTokenFromServer = '@TempData["JwtToken"]';
 
+    // Ako `jwtTokenFromServer` nije prazan, sačuvaj ga u `localStorage`
+    if (jwtTokenFromServer && jwtTokenFromServer !== "null") {
+        localStorage.setItem('jwt', jwtTokenFromServer);
+        console.log("JWT token sačuvan iz ViewBag-a u localStorage:", jwtTokenFromServer);
+    }
+
+    // Pročitaj `jwt` token iz `localStorage`
     const jwtToken = localStorage.getItem('jwt');
     console.log('JWT Token:', jwtToken);
 
+    // Proveri da li `JWT` token postoji
     if (!jwtToken) {
         console.error('JWT token not found. Redirecting to login page...');
         window.location.href = '/Home/Login';
     } else {
+        // API URL
+        const protocol = window.location.protocol;
+        const port = window.location.port ? `:${window.location.port}` : '';
+        const apiUrl = `${protocol}//localhost${port}/api/user`;
+        console.log(`Constructed API URL: ${apiUrl}`);
+
+        // Napravi API poziv sa `Authorization` zaglavljem
         fetch(apiUrl, {
             method: 'GET',
             headers: {

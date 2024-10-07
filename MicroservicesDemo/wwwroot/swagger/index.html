@@ -1,0 +1,65 @@
+﻿<!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css">
+    <link rel="stylesheet" type="text/css" href="./index.css">
+    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+</head>
+
+<body>
+    <div id="swagger-ui"></div>
+
+    <script src="./swagger-ui-bundle.js" charset="utf-8"></script>
+    <script src="./swagger-ui-standalone-preset.js" charset="utf-8"></script>
+    <script src="index.js" charset="utf-8"></script>
+
+    <!-- Prilagođeni JavaScript kod za automatsko postavljanje JWT tokena -->
+    <script>
+        window.onload = function () {
+            const ui = SwaggerUIBundle({
+                url: "/swagger/v1/swagger.json",
+                dom_id: '#swagger-ui',
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIStandalonePreset
+                ],
+                layout: "StandaloneLayout",
+
+                // Presretač zahteva: presreće sve zahteve pre nego što se pošalju
+                requestInterceptor: (req) => {
+                    // Proveri da li postoji token u `localStorage`
+                    const token = localStorage.getItem("jwt");
+                    if (token) {
+                        req.headers["Authorization"] = `Bearer ${token}`;
+                        console.log("Token dodat u zahteve: " + token);
+                    }
+                    return req;
+                },
+
+                // Presretač odgovora: rukuje odgovorima pre nego što ih Swagger UI koristi
+                responseInterceptor: (res) => {
+                    // Proveri da li je `Login` metod uspešan i sadrži token
+                    if (res.url.includes("/api/Auth/login") && res.ok) {
+                        const token = res.body?.token;
+                        if (token) {
+                            localStorage.setItem("jwt", token);
+                            console.log("Token sačuvan: " + token);
+                            ui.preauthorizeApiKey("Bearer", `Bearer ${token}`);
+                        }
+                    }
+                    return res;
+                }
+            });
+        };
+    </script>
+
+    <!-- Visual Studio Browser Link -->
+    <script type="text/javascript" src="/_vs/browserLink" async="async" id="__browserLink_initializationData" data-requestId="711801aa2f5c4731b39fee876a86d9ad" data-requestMappingFromServer="false" data-connectUrl="http://localhost:59713/531d8b6053064041aca4b3893ba32cc9/browserLink"></script>
+    <!-- End Browser Link -->
+    <script src="/_framework/aspnetcore-browser-refresh.js"></script>
+</body>
+</html>
