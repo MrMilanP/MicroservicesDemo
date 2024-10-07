@@ -118,28 +118,36 @@ Ovim refaktoringom postignuta je bolja modularnost, doslednost i lakša održivo
 
 ### Dodatak 3 - Implementacija Prilagođenog Swagger UI-a
 
-U `UserMicroservice` projektu implementiran je prilagođeni Swagger UI sa dodatnom podrškom za JWT autentifikaciju. Prilagođeni Swagger interfejs omogućava lakšu interakciju sa API metodama i automatsko rukovanje JWT tokenima nakon prijave.
+U `UserMicroservice` projektu dodata je prilagođena implementacija `Swagger UI` koristeći **custom `index.html`**. Ovaj `index.html` fajl sadrži prilagođeni JavaScript kod koji automatski postavlja `JWT` token za sve buduće API pozive u Swagger interfejsu.
 
 - **Prilagođeni `index.html`:**  
-  Ako u `wwwroot/swagger` postoji prilagođeni `index.html`, Swagger UI koristi taj fajl umesto podrazumevanog. Ova izmena omogućava veću kontrolu nad prikazom i stilom Swagger UI-a.
+  Sadrži logiku za automatsko postavljanje `JWT` tokena u `Authorization` header zahteva.  
+  Ako prilagođeni `index.html` nije prisutan u `wwwroot/swagger`, Swagger UI koristi podrazumevani interfejs i konfiguraciju.
 
 - **Direktorijum `wwwroot/swagger`:**  
-  Svi prilagođeni resursi za Swagger UI (kao što su `index.html` i `swagger-ui.css`) nalaze se u `wwwroot/swagger` direktorijumu. Ovi fajlovi omogućavaju dodatne prilagodbe kao što su automatsko postavljanje JWT tokena nakon prijave (`Login`), kao i bolju kontrolu nad funkcionalnošću Swagger-a.
+  Svi prilagođeni resursi za Swagger UI (kao što je `index.html`) nalaze se u `wwwroot/swagger` direktorijumu.  
+  Ako fajlovi poput `index.html` nisu prisutni, Swagger koristi standardni interfejs bez dodatne prilagodbe.
 
 - **Podrazumevani interfejs (`index.html`):**  
-  Ako `index.html` nije prisutan u `wwwroot/swagger`, Swagger koristi standardni interfejs bez dodatne prilagodbe.
+  Ako `index.html` nije prisutan u `wwwroot/swagger`, Swagger koristi standardni interfejs.
 
 - **Prilagođeni interfejs (`wwwroot/swagger/index.html`):**  
   Ako postoji prilagođeni `index.html` fajl, Swagger UI koristi taj fajl i omogućava lakšu interakciju sa API metodama.
+
+### Funkcionalnosti prilagođenog Swagger UI-a:
 
 - **JWT Autorizacija:**  
   Swagger UI sada sadrži `Bearer` autorizaciju, omogućavajući testiranje zaštićenih API metoda bez potrebe za manuelnim unosom JWT tokena.
 
 - **Automatsko postavljanje JWT tokena:**  
-  Implementirano rukovanje JWT tokenima nakon prijave i automatsko postavljanje u `Authorization` header za sve buduće API pozive. To omogućava besprekorno testiranje zaštićenih ruta direktno iz Swagger UI-a.
+  Prilagođeni `index.html` sadrži JavaScript kod koji prepoznaje JWT token nakon uspešne prijave i automatski ga postavlja u `Authorization` header za sve buduće API pozive. To omogućava besprekorno testiranje zaštićenih ruta direktno iz Swagger UI-a.
 
-- **Globalna konfiguracija sigurnosnih zahteva:**  
-  Implementirani su sigurnosni zahtevi koji osiguravaju da sve zaštićene rute u Swagger UI koriste `Bearer` autorizaciju. Prilikom testiranja API-ja, Swagger automatski dodaje JWT token u `Authorization` header.
+- **Presretači zahteva (`requestInterceptor`) i odgovora (`responseInterceptor`):**  
+  Prilagođeni `index.html` koristi presretače (`interceptors`) kako bi automatski rukovao JWT tokenima:
+  - `requestInterceptor`: Pre zahteva proverava postojanje `JWT` tokena u `localStorage` i dodaje ga u `Authorization` header ako postoji.
+  - `responseInterceptor`: Nakon `Login` zahteva, ekstraktuje `JWT` token iz odgovora i automatski ga postavlja u `localStorage`.
+
+Time je omogućena besprekorna integracija Swagger UI-a sa zaštićenim API-jem, bez potrebe za manuelnim unosom `JWT` tokena.
 
 ### Dodatak 4 - Korišćenje `TempData` za JWT token
 
@@ -147,8 +155,6 @@ U ovoj fazi implementacije izvršena je promena u načinu na koji se prosleđuje
 
 - **Rešenje:**  
   Koristili smo `TempData` za prenos JWT tokena, jer `TempData` može preživeti `Redirect` pozive. Ovo omogućava lakšu interakciju sa Swagger UI-jem i smanjuje potrebu za manuelnim unosom JWT tokena prilikom testiranja API poziva.
-
-
 
 
 ## Napomena
