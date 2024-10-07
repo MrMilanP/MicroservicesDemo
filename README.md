@@ -136,7 +136,7 @@ U `UserMicroservice` projektu implementiran je prilagođeni Swagger UI sa dodatn
   Swagger UI sada sadrži `Bearer` autorizaciju, omogućavajući testiranje zaštićenih API metoda bez potrebe za manuelnim unosom JWT tokena.
 
 - **Automatsko postavljanje JWT tokena:**  
-  `custom-swagger.js` prepoznaje `JWT` token nakon uspešne prijave i automatski ga postavlja u `Authorization` header za sve buduće API pozive. To omogućava besprekorno testiranje zaštićenih ruta direktno iz Swagger UI-a.
+  `JavaScript` prepoznaje `JWT` token nakon uspešne prijave i automatski ga postavlja u `Authorization` header za sve buduće API pozive. To omogućava besprekorno testiranje zaštićenih ruta direktno iz Swagger UI-a.
 
 - **Globalna konfiguracija sigurnosnih zahteva:**  
   Implementirani su sigurnosni zahtevi koji osiguravaju da sve zaštićene rute u Swagger UI koriste `Bearer` autorizaciju. Prilikom testiranja API-ja, Swagger automatski dodaje `JWT` token u `Authorization` header.
