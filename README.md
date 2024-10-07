@@ -124,7 +124,7 @@ U `UserMicroservice` projektu implementiran je prilagođeni Swagger UI sa dodatn
   Ako u `wwwroot/swagger` postoji prilagođeni `index.html`, Swagger UI koristi taj fajl umesto podrazumevanog. Ova izmena omogućava veću kontrolu nad prikazom i stilom Swagger UI-a.
 
 - **Direktorijum `wwwroot/swagger`:**  
-  Svi prilagođeni resursi za Swagger UI (kao što su `index.html`, `swagger-ui.css`, i `custom-swagger.js`) nalaze se u `wwwroot/swagger` direktorijumu. Ovi fajlovi omogućavaju dodatne prilagodbe kao što su automatsko postavljanje JWT tokena nakon prijave (`Login`), kao i bolju kontrolu nad funkcionalnošću Swagger-a.
+  Svi prilagođeni resursi za Swagger UI (`index.html`) nalaze se u `wwwroot/swagger` direktorijumu. Ovi fajlovi omogućavaju dodatne prilagodbe kao što su automatsko postavljanje JWT tokena nakon prijave (`Login`), kao i bolju kontrolu nad funkcionalnošću Swagger-a.
 
 - **Podrazumevani interfejs (`index.html`):**  
   Ako `index.html` nije prisutan u `wwwroot/swagger`, Swagger koristi standardni interfejs bez dodatne prilagodbe.
