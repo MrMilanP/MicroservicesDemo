@@ -141,6 +141,13 @@ U `UserMicroservice` projektu implementiran je prilagođeni Swagger UI sa dodatn
 - **Globalna konfiguracija sigurnosnih zahteva:**  
   Implementirani su sigurnosni zahtevi koji osiguravaju da sve zaštićene rute u Swagger UI koriste `Bearer` autorizaciju. Prilikom testiranja API-ja, Swagger automatski dodaje `JWT` token u `Authorization` header.
 
+### Dodatak 4 - Korišćenje `TempData` za JWT token
+
+U ovoj fazi implementacije izvršena je promena u načinu na koji se prosleđuje `JWT` token između `Login` akcije i `UserProfile` View-a. Ranije smo koristili `ViewBag` za prenošenje tokena, ali to nije funkcionisalo nakon `RedirectToAction` poziva jer `ViewBag` ne može preživeti `Redirect`. 
+
+**Rešenje:** Koristili smo `TempData` za prenos `JWT` tokena, jer `TempData` može preživeti `Redirect` pozive.
+
+
 Ove izmene omogućavaju lakšu interakciju sa Swagger UI-jem i smanjuju potrebu za manuelnim unosom `JWT` tokena prilikom testiranja API poziva.
 
 
