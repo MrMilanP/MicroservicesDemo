@@ -124,31 +124,29 @@ U `UserMicroservice` projektu implementiran je prilagođeni Swagger UI sa dodatn
   Ako u `wwwroot/swagger` postoji prilagođeni `index.html`, Swagger UI koristi taj fajl umesto podrazumevanog. Ova izmena omogućava veću kontrolu nad prikazom i stilom Swagger UI-a.
 
 - **Direktorijum `wwwroot/swagger`:**  
-  Svi prilagođeni resursi za Swagger UI (`index.html`) nalaze se u `wwwroot/swagger` direktorijumu. Ovi fajlovi omogućavaju dodatne prilagodbe kao što su automatsko postavljanje JWT tokena nakon prijave (`Login`), kao i bolju kontrolu nad funkcionalnošću Swagger-a.
+  Svi prilagođeni resursi za Swagger UI (kao što su `index.html` i `swagger-ui.css`) nalaze se u `wwwroot/swagger` direktorijumu. Ovi fajlovi omogućavaju dodatne prilagodbe kao što su automatsko postavljanje JWT tokena nakon prijave (`Login`), kao i bolju kontrolu nad funkcionalnošću Swagger-a.
 
 - **Podrazumevani interfejs (`index.html`):**  
   Ako `index.html` nije prisutan u `wwwroot/swagger`, Swagger koristi standardni interfejs bez dodatne prilagodbe.
 
 - **Prilagođeni interfejs (`wwwroot/swagger/index.html`):**  
-  Ako postoji prilagođeni `index.html` fajl, Swagger UI koristi taj fajl i prilagođeni `JavaScript` kod  za automatsko rukovanje `JWT` tokenima.
+  Ako postoji prilagođeni `index.html` fajl, Swagger UI koristi taj fajl i omogućava lakšu interakciju sa API metodama.
 
 - **JWT Autorizacija:**  
   Swagger UI sada sadrži `Bearer` autorizaciju, omogućavajući testiranje zaštićenih API metoda bez potrebe za manuelnim unosom JWT tokena.
 
 - **Automatsko postavljanje JWT tokena:**  
-  `JavaScript` prepoznaje `JWT` token nakon uspešne prijave i automatski ga postavlja u `Authorization` header za sve buduće API pozive. To omogućava besprekorno testiranje zaštićenih ruta direktno iz Swagger UI-a.
+  Implementirano rukovanje JWT tokenima nakon prijave i automatsko postavljanje u `Authorization` header za sve buduće API pozive. To omogućava besprekorno testiranje zaštićenih ruta direktno iz Swagger UI-a.
 
 - **Globalna konfiguracija sigurnosnih zahteva:**  
-  Implementirani su sigurnosni zahtevi koji osiguravaju da sve zaštićene rute u Swagger UI koriste `Bearer` autorizaciju. Prilikom testiranja API-ja, Swagger automatski dodaje `JWT` token u `Authorization` header.
+  Implementirani su sigurnosni zahtevi koji osiguravaju da sve zaštićene rute u Swagger UI koriste `Bearer` autorizaciju. Prilikom testiranja API-ja, Swagger automatski dodaje JWT token u `Authorization` header.
 
 ### Dodatak 4 - Korišćenje `TempData` za JWT token
 
-U ovoj fazi implementacije izvršena je promena u načinu na koji se prosleđuje `JWT` token između `Login` akcije i `UserProfile` View-a. Ranije smo koristili `ViewBag` za prenošenje tokena, ali to nije funkcionisalo nakon `RedirectToAction` poziva jer `ViewBag` ne može preživeti `Redirect`. 
+U ovoj fazi implementacije izvršena je promena u načinu na koji se prosleđuje JWT token između `Login` akcije i `UserProfile` View-a. Ranije smo koristili `ViewBag` za prenošenje tokena, ali to nije funkcionisalo nakon `RedirectToAction` poziva jer `ViewBag` ne može preživeti `Redirect`.
 
-**Rešenje:** Koristili smo `TempData` za prenos `JWT` tokena, jer `TempData` može preživeti `Redirect` pozive.
-
-
-Ove izmene omogućavaju lakšu interakciju sa Swagger UI-jem i smanjuju potrebu za manuelnim unosom `JWT` tokena prilikom testiranja API poziva.
+- **Rešenje:**  
+  Koristili smo `TempData` za prenos JWT tokena, jer `TempData` može preživeti `Redirect` pozive. Ovo omogućava lakšu interakciju sa Swagger UI-jem i smanjuje potrebu za manuelnim unosom JWT tokena prilikom testiranja API poziva.
 
 
 
