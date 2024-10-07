@@ -130,7 +130,7 @@ U `UserMicroservice` projektu implementiran je prilagođeni Swagger UI sa dodatn
   Ako `index.html` nije prisutan u `wwwroot/swagger`, Swagger koristi standardni interfejs bez dodatne prilagodbe.
 
 - **Prilagođeni interfejs (`wwwroot/swagger/index.html`):**  
-  Ako postoji prilagođeni `index.html` fajl, Swagger UI koristi taj fajl i prilagođeni `JavaScript` kod (`custom-swagger.js`) za automatsko rukovanje `JWT` tokenima.
+  Ako postoji prilagođeni `index.html` fajl, Swagger UI koristi taj fajl i prilagođeni `JavaScript` kod  za automatsko rukovanje `JWT` tokenima.
 
 - **JWT Autorizacija:**  
   Swagger UI sada sadrži `Bearer` autorizaciju, omogućavajući testiranje zaštićenih API metoda bez potrebe za manuelnim unosom JWT tokena.
